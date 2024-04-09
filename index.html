@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kő, Papír, Olló</title>
+        <style>
+            body
+            {
+                background-color: rgb(255, 255, 255);
+                font-family: Arial, sans-serif;
+            }
+
+            h1
+            {
+                color: rgb(53, 0, 102);
+                text-align: center;
+            }
+
+            p
+            {
+                color: rgb(78, 0, 102);
+            }
+
+            img
+            {
+                width: 200px;
+                height: 200px;
+                border: 2px solid rgba(169, 169, 169, 0.555);
+            }
+
+            .container
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .choice
+            {
+                margin: 10px;
+                cursor: pointer;
+            }
+
+            .result
+            {
+                margin-top: 20px;
+            }
+
+            #vegTabla
+            {
+                border-collapse: collapse;
+                margin: 0 auto;
+            }
+
+            #vegTabla th, #vegTabla td
+            {
+                border: 1px solid black;
+                padding: 10px;
+            }
+
+            #vegTabla img
+            {
+                width: 200px;
+                height: 200px;
+            }
+
+            #vegTablaContainer
+            {
+                display: none;
+            }
+
+            #folytGomb
+            {
+                display: none;
+                margin: 0 auto;
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Kő, papír, olló</h1>
+
+        <p class = "result">Nyertél: <span id = "nyer"></span></p>
+        <p class = "result">Vesztettél: <span id = "vesztett"></span></p>
+        <p class = "result">Döntetlen: <span id = "dontetlen"></span></p>
+
+        <div class = "container">
+            <div class = "choice" onclick = "valasztas('ko')">
+                <img alt = "Kő" src = "Kő.png">
+            </div>
+            <div class = "choice" onclick = "valasztas('papir')">
+                <img alt = "Kő" src = "Papír.png">
+            </div>
+            <div class = "choice" onclick = "valasztas('ollo')">
+                <img alt = "Kő" src = "Olló.png">
+            </div>
+        </div>
+
+        <div id = "vegTablaContainer" class = "result">
+            <table id = "vegTabla">
+                <tr>
+                    <td id = "computerResult"><img src = "" alt = ""></td>
+                    <td id = "result"><img src = "" alt = ""></td>
+                    <td id = "resultPic"><img src = "" alt = ""></td>
+                </tr>
+            </table>
+            <button id = "folytGomb" onclick = "folytat()">Folytatás</button>
+        </div>
+
+        <script>
+            let nyer = 0;
+            let vesztett = 0;
+            let dontetlen = 0;
+
+            function valasztas(felh)
+            {
+                const options = ["ko", "papir", "ollo"];
+                const index = Math.floor(Math.random() * 3);
+                const gep = options[index];
+
+                let eredmeny = "";
+
+                if (felh === gep)
+                {
+                    eredmeny = 'Döntetlen';
+                    dontetlen++;
+                }
+                else if ((felh === 'ko' && gep === 'ollo') ||
+                        (felh === 'papir' && gep === 'ko') ||
+                        (felh === 'ollo' && gep === 'papir'))
+                {
+                    eredmeny = 'Nyertél';
+                    nyer++;
+                }
+                else
+                {
+                    eredmeny = 'Vesztettél';
+                    vesztett++;
+                }
+
+                document.getElementById("nyer").textContent = nyer;
+                document.getElementById("vesztett").textContent = vesztett;
+                document.getElementById("dontetlen").textContent = dontetlen;
+
+                if(felh == "ko" && gep == "ko")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Kő.png";
+                    document.getElementById("result").querySelector('img').src = "Döntetlen.png";
+                    document.getElementById("resultPic").querySelector('img').src = "Kövek.png";
+                }
+                if(felh == "ko" && gep == "papir")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Papír.png";
+                    document.getElementById("result").querySelector('img').src = "Vesztett.png";
+                    document.getElementById("resultPic").querySelector('img').src = "KoPapir.png";
+                }
+                if(felh == "ko" && gep == "ollo")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Kő.png";
+                    document.getElementById("result").querySelector('img').src = "Nyertél.png";
+                    document.getElementById("resultPic").querySelector('img').src = "KoOllo.png";
+                }
+
+                if(felh == "papir" && gep == "papir")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Papír.png";
+                    document.getElementById("result").querySelector('img').src = "Döntetlen.png";
+                    document.getElementById("resultPic").querySelector('img').src = "Papírok.png";
+                }
+                if(felh == "papir" && gep == "ollo")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Olló.png";
+                    document.getElementById("result").querySelector('img').src = "Vesztett.png";
+                    document.getElementById("resultPic").querySelector('img').src = "PapirOllo.png";
+                }
+                if(felh == "papir" && gep == "ko")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Kő.png";
+                    document.getElementById("result").querySelector('img').src = "Nyertél.png";
+                    document.getElementById("resultPic").querySelector('img').src = "KoPapir.png";
+                }
+
+                if(felh == "ollo" && gep == "ollo")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Olló.png";
+                    document.getElementById("result").querySelector('img').src = "Döntetlen.png";
+                    document.getElementById("resultPic").querySelector('img').src = "Ollók.png";
+                }
+                if(felh == "ollo" && gep == "ko")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Kő.png";
+                    document.getElementById("result").querySelector('img').src = "Vesztett.png";
+                    document.getElementById("resultPic").querySelector('img').src = "KoOllo.png";
+                }
+                if(felh == "ollo" && gep == "papir")
+                {
+                    document.getElementById("computerResult").querySelector('img').src = "Papír.png";
+                    document.getElementById("result").querySelector('img').src = "Nyertél.png";
+                    document.getElementById("resultPic").querySelector('img').src = "PapirOllo.png";
+                }
+
+                const vegTablaContainer = document.getElementById("vegTablaContainer");
+                vegTablaContainer.style.display = "block";
+
+                const folytGomb = document.getElementById("folytGomb");
+                folytGomb.style.display = "block";
+                folytGomb.focus();
+
+                folytGomb.onclick = function()
+                {
+                    vegTablaContainer.style.display = "none";
+                    folytGomb.style.display = "none";
+                };
+            }
+
+            function folytat()
+            {
+                document.querySelectorAll(".choice").forEach(function(element)
+                {
+                    element.style.pointerEvents = "auto";
+                });
+            }
+        </script>
+    </body>
+</html>
